@@ -1,4 +1,4 @@
-from code.app_flaskrestful import app
+from app_flaskrestful import app
 from db import db
 
 db.init_app(app)
