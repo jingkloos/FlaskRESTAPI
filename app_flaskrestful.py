@@ -1,21 +1,19 @@
 from flask import Flask
 from flask_restful import Api
-from security import authenticate,identity
+from code.security import authenticate,identity
 from flask_jwt import JWT
-from resources.user import UserRegister
-from resources.item import Item,ItemList
-from resources.store import Store,StoreList
+from code.resources.user import UserRegister
+from code.resources.item import Item,ItemList
+from code.resources.store import Store,StoreList
 from _datetime import timedelta
 from flask.json import jsonify
-from db import db
+
 
 app = Flask(__name__)
 app.secret_key='email'
 api = Api(app)
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #turn off flask sqlalchemy modification, use sqlalchemy track
@@ -48,6 +46,7 @@ api.add_resource(Store,'/Store/<string:name>')
 api.add_resource(StoreList,'/Stores')
 
 if __name__ == '__main__':          #this is to prevent app to be run by any import
+    from db import db
     db.init_app(app)
     app.run(port=5000,debug=True)
 
