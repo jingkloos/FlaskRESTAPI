@@ -7,6 +7,7 @@ from resources.item import Item,ItemList
 from resources.store import Store,StoreList
 from _datetime import timedelta
 from flask.json import jsonify
+import os
 
 
 app = Flask(__name__)
@@ -15,7 +16,7 @@ api = Api(app)
 
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #turn off flask sqlalchemy modification, use sqlalchemy track
 app.config['JWT_AUTH_URL_RULE']='/Login'  #change the default /auth to /Login
 app.config['JWT_EXPIRATION_DELTA']=timedelta(seconds=1800)   #default is 5 mins
