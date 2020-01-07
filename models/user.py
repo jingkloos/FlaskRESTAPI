@@ -25,5 +25,9 @@ class UserModel(db.Model):
         db.session.add(self)
         db.session.commit()
     
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def jason(self):
-        return {'username':self.username,'password':'******'}
+        return {'userid':self.id,'username':self.username,'password':'******'}
